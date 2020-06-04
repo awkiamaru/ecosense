@@ -2,9 +2,6 @@ import { Repository, EntityRepository } from 'typeorm';
 import { Point } from './points.entity';
 import { CreatePointDTO } from './dto/point.dto';
 import { Logger, InternalServerErrorException } from '@nestjs/common';
-import { Item } from 'src/items/items.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { PointItemRepository } from './point-item.repository';
 @EntityRepository(Point)
 export class PointRepository extends Repository<Point> {
   private logger = new Logger('PointRepository');
