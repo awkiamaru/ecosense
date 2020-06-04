@@ -7,7 +7,9 @@ import {
 } from 'typeorm';
 import { PointItem } from './point-item.entity';
 
-@Entity()
+@Entity({
+  engine: 'InnoDB',
+})
 export class Point extends BaseEntity {
   @PrimaryGeneratedColumn()
   pointId: number;
@@ -40,5 +42,5 @@ export class Point extends BaseEntity {
     () => PointItem,
     pointItem => pointItem.point,
   )
-  public pointItem: PointItem[];
+  public pointItem: Promise<PointItem[]>;
 }

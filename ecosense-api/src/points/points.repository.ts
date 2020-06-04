@@ -7,7 +7,6 @@ export class PointRepository extends Repository<Point> {
   private logger = new Logger('PointRepository');
 
   public async savePoint(pointDTO: CreatePointDTO) {
-    this.logger.log(`Recebendo objeto: ${JSON.stringify(pointDTO)}`);
     const point = new Point();
     point.image = 'image-fake';
     point.name = pointDTO.name;

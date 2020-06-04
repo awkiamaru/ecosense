@@ -9,7 +9,9 @@ import {
 import { Item } from 'src/items/items.entity';
 import { Point } from './points.entity';
 
-@Entity()
+@Entity({
+  engine: 'InnoDB',
+})
 export class PointItem extends BaseEntity {
   @PrimaryGeneratedColumn()
   pointItemId: number;
@@ -38,5 +40,5 @@ export class PointItem extends BaseEntity {
     },
   )
   @JoinColumn({ name: 'itemId' })
-  public point: Point;
+  public point: Promise<Point>;
 }

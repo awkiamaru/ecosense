@@ -16,6 +16,7 @@ export class PointsService {
 
   public async createNewPoint(pointDTO: CreatePointDTO) {
     const point = await this.pointRepository.savePoint(pointDTO);
+    Logger.log(JSON.stringify(point));
     const pointItems = Array<PointItem>();
     pointDTO.items.map((id: number) => {
       const pointItem = new PointItem();
@@ -24,6 +25,7 @@ export class PointsService {
       pointItems.push(pointItem);
     });
     try {
+      Logger.log(JSON.stringify(pointItems));
       await this.pointItemRepository.save(pointItems);
     } catch (error) {
       Logger.error('ERRO', error.stack);
