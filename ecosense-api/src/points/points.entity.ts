@@ -5,7 +5,6 @@ import {
   Column,
   OneToMany,
 } from 'typeorm';
-import { Item } from 'src/items/items.entity';
 import { PointItem } from './point-item.entity';
 
 @Entity()
@@ -38,7 +37,7 @@ export class Point extends BaseEntity {
   uf: string;
 
   @OneToMany(
-    type => PointItem,
+    () => PointItem,
     pointItem => pointItem.point,
   )
   public pointItem: PointItem[];

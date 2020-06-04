@@ -1,5 +1,3 @@
-import { Item } from 'src/items/items.entity';
-
 export class CreatePointDTO {
   pointId: number;
 

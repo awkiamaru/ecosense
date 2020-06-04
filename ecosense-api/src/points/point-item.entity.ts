@@ -21,7 +21,7 @@ export class PointItem extends BaseEntity {
   pointId: number;
 
   @ManyToOne(
-    type => Item,
+    () => Item,
     item => item.pointItem,
     {
       primary: true,
@@ -31,7 +31,7 @@ export class PointItem extends BaseEntity {
   public item: Item;
 
   @ManyToOne(
-    type => Point,
+    () => Point,
     point => point.pointItem,
     {
       primary: true,

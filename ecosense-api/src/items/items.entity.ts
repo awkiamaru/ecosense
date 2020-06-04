@@ -19,7 +19,7 @@ export class Item extends BaseEntity {
   title: string;
 
   @OneToMany(
-    type => PointItem,
+    () => PointItem,
     pointItem => pointItem.item,
   )
   public pointItem: PointItem[];
