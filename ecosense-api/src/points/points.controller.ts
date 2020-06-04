@@ -1,6 +1,7 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Query } from '@nestjs/common';
 import { PointsService } from './points.service';
 import { CreatePointDTO } from './dto/point.dto';
+import { FilterPointDTO } from './dto/filter.dto';
 
 @Controller('points')
 export class PointsController {
@@ -11,8 +12,13 @@ export class PointsController {
     return this.pointService.findById(id);
   }
 
+  @Get()
+  public getAllPoints(@Query() filterDTO: FilterPointDTO) {
+    return this.pointService.findAll(filterDTO);
+  }
+
   @Post()
-  public createPoint(@Body() pointDTO: CreatePointDTO) {
-    return this.pointService.createNewPoint(pointDTO);
+  public async createPoint(@Body() pointDTO: CreatePointDTO) {
+    return await this.pointService.createNewPoint(pointDTO);
   }
 }

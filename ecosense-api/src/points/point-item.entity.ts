@@ -29,7 +29,7 @@ export class PointItem extends BaseEntity {
       primary: true,
     },
   )
-  @JoinColumn({ name: 'pointId' })
+  @JoinColumn({ name: 'itemId' })
   public item: Item;
 
   @ManyToOne(
@@ -39,6 +39,6 @@ export class PointItem extends BaseEntity {
       primary: true,
     },
   )
-  @JoinColumn({ name: 'itemId' })
+  @JoinColumn({ name: 'pointId' })
   public point: Promise<Point>;
 }
