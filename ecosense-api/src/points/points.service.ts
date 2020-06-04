@@ -10,6 +10,9 @@ import { CreatePointDTO } from './dto/point.dto';
 import { PointItemRepository } from './point-item.repository';
 import { PointItem } from './point-item.entity';
 import { Point } from './points.entity';
+import { ItemRepository } from 'src/items/items.repository';
+import { JoinTable } from 'typeorm';
+import { response } from 'express';
 
 @Injectable()
 export class PointsService {
@@ -19,16 +22,26 @@ export class PointsService {
     private pointRepository: PointRepository,
     @InjectRepository(PointItemRepository)
     private pointItemRepository: PointItemRepository,
+    @InjectRepository(ItemRepository)
+    private itemItemRepository: ItemRepository,
   ) {}
 
-  public async findById(pointId: number): Promise<Point> {
+  public async findById(pointId: number): Promise<any> {
     const foundPoint = await this.pointRepository.findOne({
       where: { pointId },
     });
     if (!foundPoint) {
       throw new NotFoundException(`Point id ${pointId} not found`);
     }
-    return foundPoint;
+
+    const item = await this.pointRepository.query(`select item.title from item
+      inner join point_item on item.itemId = point_item.itemId
+      where point_item.pointId = ${pointId};`);
+
+    return {
+      foundPoint,
+      item,
+    };
   }
 
   public async createNewPoint(pointDTO: CreatePointDTO) {
