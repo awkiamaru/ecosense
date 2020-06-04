@@ -1,4 +1,11 @@
-import { BaseEntity, PrimaryGeneratedColumn, Entity, Column } from 'typeorm';
+import {
+  BaseEntity,
+  PrimaryGeneratedColumn,
+  Entity,
+  Column,
+  OneToMany,
+} from 'typeorm';
+import { PointItem } from 'src/points/point-item.entity';
 
 @Entity()
 export class Item extends BaseEntity {
@@ -10,4 +17,10 @@ export class Item extends BaseEntity {
 
   @Column()
   title: string;
+
+  @OneToMany(
+    type => PointItem,
+    pointItem => pointItem.item,
+  )
+  public pointItem: PointItem[];
 }

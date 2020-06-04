@@ -3,13 +3,13 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  ManyToMany,
-  JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { Item } from 'src/items/items.entity';
+import { PointItem } from './point-item.entity';
 
 @Entity()
-export class Points extends BaseEntity {
+export class Point extends BaseEntity {
   @PrimaryGeneratedColumn()
   pointId: number;
 
@@ -37,7 +37,9 @@ export class Points extends BaseEntity {
   @Column()
   uf: string;
 
-  @ManyToMany(type => Item)
-  @JoinTable()
-  items: Item[];
+  @OneToMany(
+    type => PointItem,
+    pointItem => pointItem.point,
+  )
+  public pointItem: PointItem[];
 }
