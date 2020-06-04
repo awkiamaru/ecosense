@@ -26,10 +26,10 @@ export class Points extends BaseEntity {
   contact: string;
 
   @Column()
-  latitude: string;
+  latitude: number;
 
   @Column()
-  longitude: string;
+  longitude: number;
 
   @Column()
   city: string;
