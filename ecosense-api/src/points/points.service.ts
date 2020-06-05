@@ -58,7 +58,6 @@ export class PointsService {
     const pointItems = await Array<PointItem>();
     pointDTO.items.map((id: number) => {
       const pointItem = new PointItem();
-      this.logger.log(` ${point.pointId} ${id}`);
       pointItem.pointId = point.pointId;
       pointItem.itemId = id;
     });
