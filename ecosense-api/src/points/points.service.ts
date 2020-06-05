@@ -61,7 +61,6 @@ export class PointsService {
       this.logger.log(` ${point.pointId} ${id}`);
       pointItem.pointId = point.pointId;
       pointItem.itemId = id;
-      pointItems.push(pointItem);
     });
     try {
       await this.pointItemRepository.insert(pointItems);

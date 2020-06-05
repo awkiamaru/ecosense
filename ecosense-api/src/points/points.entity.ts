@@ -26,10 +26,13 @@ export class Point extends BaseEntity {
   @Column()
   contact: string;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+  })
   latitude: number;
-
-  @Column()
+  @Column({
+    type: 'varchar',
+  })
   longitude: number;
 
   @Column()

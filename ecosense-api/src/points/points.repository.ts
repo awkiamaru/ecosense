@@ -39,8 +39,9 @@ export class PointRepository extends Repository<Point> {
     point.longitude = pointDTO.longitude;
     point.city = pointDTO.city;
     point.uf = pointDTO.uf;
+
     try {
-      await this.insert(point);
+      await this.save(point);
     } catch (error) {
       this.logger.error(`Error on save new point`, error.stack);
       throw new InternalServerErrorException();
