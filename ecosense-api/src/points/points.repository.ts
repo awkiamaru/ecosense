@@ -4,6 +4,7 @@ import { CreatePointDTO } from './dto/point.dto';
 import { Logger, InternalServerErrorException } from '@nestjs/common';
 import { FilterPointDTO } from './dto/filter.dto';
 import { PointItem } from './point-item.entity';
+import { ImageFile } from './dto/image.interface';
 @EntityRepository(Point)
 export class PointRepository extends Repository<Point> {
   private logger = new Logger('PointRepository');
@@ -28,10 +29,9 @@ export class PointRepository extends Repository<Point> {
     return points;
   }
 
-  public async savePoint(pointDTO: CreatePointDTO) {
+  public async savePoint(pointDTO: CreatePointDTO, file: ImageFile) {
     const point = new Point();
-    point.image =
-      'https://images.unsplash.com/photo-1591161537503-d724e4a9f756?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60';
+    point.image = file.filename;
     point.name = pointDTO.name;
     point.email = pointDTO.email;
     point.contact = pointDTO.contact;

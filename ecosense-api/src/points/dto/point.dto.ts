@@ -17,5 +17,5 @@ export class CreatePointDTO {
 
   uf: string;
 
-  items: number[];
+  items: string;
 }

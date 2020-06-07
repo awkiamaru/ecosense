@@ -11,6 +11,7 @@ import { PointItemRepository } from './point-item.repository';
 import { PointItem } from './point-item.entity';
 import { FilterPointDTO } from './dto/filter.dto';
 import { ItemRepository } from 'src/items/items.repository';
+import { ImageFile } from './dto/image.interface';
 
 @Injectable()
 export class PointsService {
@@ -25,7 +26,15 @@ export class PointsService {
   ) {}
 
   public async findAll(filterDTO: FilterPointDTO) {
-    return this.pointRepository.findAllPoints(filterDTO);
+    const points = await this.pointRepository.findAllPoints(filterDTO);
+
+    const serializedPoints = points.map(point => {
+      return {
+        ...point,
+        image: `http://localhost:3333/uploads/${point.image}`,
+      };
+    });
+    return serializedPoints;
   }
 
   public async findById(pointId: number): Promise<any> {
@@ -35,6 +44,11 @@ export class PointsService {
     if (!foundPoint) {
       throw new NotFoundException(`Point id ${pointId} not found`);
     }
+
+    const serializedPoints = {
+      ...foundPoint,
+      image: `http://localhost:3333/uploads/${foundPoint.image}`,
+    };
 
     const items = await this.itemRepository
       .createQueryBuilder('item')
@@ -48,21 +62,24 @@ export class PointsService {
       .getMany();
 
     return {
-      foundPoint,
+      serializedPoints,
       items,
     };
   }
 
-  public async createNewPoint(pointDTO: CreatePointDTO) {
-    const point = await this.pointRepository.savePoint(pointDTO);
+  public async createNewPoint(pointDTO: CreatePointDTO, file: ImageFile) {
+    const point = await this.pointRepository.savePoint(pointDTO, file);
 
     const pointItems = await Array<PointItem>();
-    pointDTO.items.map((id: number) => {
-      const pointItem = new PointItem();
-      pointItem.pointId = point.pointId;
-      pointItem.itemId = id;
-      pointItems.push(pointItem);
-    });
+    pointDTO.items
+      .split(',')
+      .map((item: string) => Number(item.trim()))
+      .map((id: number) => {
+        const pointItem = new PointItem();
+        pointItem.pointId = point.pointId;
+        pointItem.itemId = id;
+        pointItems.push(pointItem);
+      });
     try {
       await this.pointItemRepository.insert(pointItems);
     } catch (error) {

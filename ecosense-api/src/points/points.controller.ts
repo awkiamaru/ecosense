@@ -7,6 +7,7 @@ import {
   Query,
   UseInterceptors,
   UploadedFile,
+  Logger,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { PointsService } from './points.service';
@@ -14,6 +15,7 @@ import { CreatePointDTO } from './dto/point.dto';
 import { FilterPointDTO } from './dto/filter.dto';
 import { diskStorage } from 'multer';
 import * as ImageName from '../config/multer.config';
+import { ImageFile } from './dto/image.interface';
 @Controller('points')
 export class PointsController {
   constructor(private pointService: PointsService) {}
@@ -39,27 +41,10 @@ export class PointsController {
     }),
   )
   public async createPoint(
-    @UploadedFile() file,
+    @UploadedFile() file: ImageFile,
     @Body() pointDTO: CreatePointDTO,
   ) {
-    return await this.pointService.createNewPoint(pointDTO);
-  }
-
-  @Post('/image')
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: diskStorage({
-        destination: './uploads',
-        filename: ImageName.fileEditName,
-      }),
-      fileFilter: ImageName.imageFileFilter,
-    }),
-  )
-  async uploadedFile(@UploadedFile() file) {
-    const response = {
-      originalname: file.originalname,
-      filename: file.filename,
-    };
-    return response;
+    Logger.log(pointDTO);
+    await this.pointService.createNewPoint(pointDTO, file);
   }
 }
