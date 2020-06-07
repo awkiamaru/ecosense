@@ -8,6 +8,7 @@ import {
   UseInterceptors,
   UploadedFile,
   Logger,
+  ValidationPipe,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { PointsService } from './points.service';
@@ -42,7 +43,7 @@ export class PointsController {
   )
   public async createPoint(
     @UploadedFile() file: ImageFile,
-    @Body() pointDTO: CreatePointDTO,
+    @Body(ValidationPipe) pointDTO: CreatePointDTO,
   ) {
     Logger.log(pointDTO);
     await this.pointService.createNewPoint(pointDTO, file);
