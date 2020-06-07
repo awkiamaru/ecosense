@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -10,12 +10,46 @@ import {
 import { RectButton } from "react-native-gesture-handler";
 import { Feather as Icon, FontAwesome } from "@expo/vector-icons";
 import Constants from "expo-constants";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import api from "../../services/api";
+import Point from "../Points";
+interface Params {
+  pointId: number;
+}
+
+interface Data {
+  foundPoint: {
+    image: string;
+    name: string;
+    email: string;
+    contact: string;
+    city: string;
+    uf: string;
+  };
+  items: {
+    title: string;
+  }[];
+}
 
 const Details = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const [data, setData] = useState<Data>({} as Data);
+  const routeParams = route.params as Params;
+
+  useEffect(() => {
+    api.get(`points/${routeParams.pointId}`).then((response) => {
+      setData(response.data);
+      console.log(data.foundPoint);
+    });
+  }, []);
+
   function handleNavigateBack() {
     navigation.goBack();
+  }
+
+  if (!data.foundPoint) {
+    return null;
   }
   return (
     <>
@@ -23,17 +57,19 @@ const Details = () => {
         <TouchableOpacity onPress={handleNavigateBack}>
           <Icon name="arrow-left" size={20} color="#34cb79"></Icon>
         </TouchableOpacity>
-
         <Image
           style={styles.pointImage}
-          source={{ uri: "https://i.picsum.photos/id/776/200/300.jpg" }}
+          source={{ uri: data.foundPoint.image }}
         ></Image>
-        <Text style={styles.pointName}>Mercado Michelina</Text>
-        <Text style={styles.pointItems}>Lâmpada, Oléo de Cozinha</Text>
-
+        <Text style={styles.pointName}>{data.foundPoint.name}</Text>
+        <Text style={styles.pointItems}>
+          {data.items.map((item) => item.title).join(",")}
+        </Text>
         <View style={styles.address}>
           <Text style={styles.addressTitle}>Address</Text>
-          <Text style={styles.addressContent}>São Paulo, SP</Text>
+          <Text style={styles.addressContent}>
+            {data.foundPoint.city}, {data.foundPoint.uf}
+          </Text>
         </View>
       </View>
       <View style={styles.footer}>
