@@ -19,7 +19,7 @@ interface Params {
 }
 
 interface Data {
-  foundPoint: {
+  serializedPoints: {
     image: string;
     name: string;
     email: string;
@@ -41,7 +41,6 @@ const Details = () => {
   useEffect(() => {
     api.get(`points/${routeParams.pointId}`).then((response) => {
       setData(response.data);
-      console.log(data.foundPoint);
     });
   }, []);
 
@@ -52,17 +51,17 @@ const Details = () => {
   function handleComposeMail() {
     MailComposer.composeAsync({
       subject: "Interest in collecting recyclable waste",
-      recipients: [data.foundPoint.email],
+      recipients: [data.serializedPoints.email],
     });
   }
 
   function handleContact() {
     Linking.openURL(
-      `whatsapp://send?phone=${data.foundPoint.contact}&text=I Have interest`
+      `whatsapp://send?phone=${data.serializedPoints.contact}&text=I Have interest`
     );
   }
 
-  if (!data.foundPoint) {
+  if (!data.serializedPoints) {
     return null;
   }
   return (
@@ -73,16 +72,18 @@ const Details = () => {
         </TouchableOpacity>
         <Image
           style={styles.pointImage}
-          source={{ uri: data.foundPoint.image }}
+          source={{
+            uri: data.serializedPoints.image ? data.serializedPoints.image : "",
+          }}
         ></Image>
-        <Text style={styles.pointName}>{data.foundPoint.name}</Text>
+        <Text style={styles.pointName}>{data.serializedPoints.name}</Text>
         <Text style={styles.pointItems}>
           {data.items.map((item) => item.title).join(",")}
         </Text>
         <View style={styles.address}>
           <Text style={styles.addressTitle}>Address</Text>
           <Text style={styles.addressContent}>
-            {data.foundPoint.city}, {data.foundPoint.uf}
+            {data.serializedPoints.city}, {data.serializedPoints.uf}
           </Text>
         </View>
       </View>

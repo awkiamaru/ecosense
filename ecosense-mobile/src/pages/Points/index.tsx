@@ -95,6 +95,8 @@ const Point = () => {
   }
 
   function handleSelectItem(itemId: number) {
+    console.log(points);
+
     const alreadySelected = selectedItems.findIndex((item) => item === itemId);
 
     if (alreadySelected >= 0) {

@@ -31,7 +31,7 @@ export class PointsService {
     const serializedPoints = points.map(point => {
       return {
         ...point,
-        image: `http://localhost:3333/uploads/${point.image}`,
+        image: `http://192.168.15.16:3333/uploads/${point.image}`,
       };
     });
     return serializedPoints;
@@ -47,7 +47,7 @@ export class PointsService {
 
     const serializedPoints = {
       ...foundPoint,
-      image: `http://localhost:3333/uploads/${foundPoint.image}`,
+      image: `http://192.168.15.16:3333/uploads/${foundPoint.image}`,
     };
 
     const items = await this.itemRepository
