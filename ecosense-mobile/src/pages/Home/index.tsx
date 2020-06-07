@@ -1,39 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 import { Feather as Icon } from "@expo/vector-icons";
-import { View, StyleSheet, Image, Text, ImageBackground } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  ImageBackground,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 const Home = () => {
+  const [uf, setUf] = useState("");
+  const [city, setCity] = useState("");
   const navigation = useNavigation();
   function handleNavigateToMap() {
-    navigation.navigate("Point");
+    navigation.navigate("Point", {
+      uf,
+      city,
+    });
   }
   return (
-    <ImageBackground
-      source={require("../../assets/home-background.png")}
-      imageStyle={{
-        width: 274,
-        height: 368,
-      }}
-      style={styles.container}
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
-      <View style={styles.main}>
-        <Image source={require("../../assets/logo.png")} />
-        <Text style={styles.title}>Your marketplace of waste collect</Text>
-        <Text style={styles.description}>We help people collect points </Text>
-      </View>
+      <ImageBackground
+        source={require("../../assets/home-background.png")}
+        imageStyle={{
+          width: 274,
+          height: 368,
+        }}
+        style={styles.container}
+      >
+        <View style={styles.main}>
+          <Image source={require("../../assets/logo.png")} />
+          <Text style={styles.title}>Your marketplace of waste collect</Text>
+          <Text style={styles.description}>We help people collect points </Text>
+        </View>
 
-      <View style={styles.footer}>
-        <RectButton style={styles.button} onPress={handleNavigateToMap}>
-          <View style={styles.buttonIcon}>
-            <Text>
-              <Icon name="arrow-right" color="#FFF" size={24}></Icon>
-            </Text>
-          </View>
-          <Text style={styles.buttonText}>Entrar</Text>
-        </RectButton>
-      </View>
-    </ImageBackground>
+        <View style={styles.footer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Type the UF"
+            value={uf}
+            maxLength={2}
+            autoCapitalize="characters"
+            onChangeText={setUf}
+          ></TextInput>
+          <TextInput
+            style={styles.input}
+            placeholder="Type the city"
+            value={city}
+            onChangeText={setCity}
+          ></TextInput>
+          <RectButton style={styles.button} onPress={handleNavigateToMap}>
+            <View style={styles.buttonIcon}>
+              <Text>
+                <Icon name="arrow-right" color="#FFF" size={24}></Icon>
+              </Text>
+            </View>
+            <Text style={styles.buttonText}>Entrar</Text>
+          </RectButton>
+        </View>
+      </ImageBackground>
+    </KeyboardAvoidingView>
   );
 };
 
