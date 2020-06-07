@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsEmail, MaxLength } from 'class-validator';
 
 export class CreatePointDTO {
   @IsNotEmpty()
@@ -6,6 +6,7 @@ export class CreatePointDTO {
   name: string;
   @IsNotEmpty()
   @IsString()
+  @IsEmail()
   email: string;
   @IsNotEmpty()
   @IsString()
@@ -20,6 +21,7 @@ export class CreatePointDTO {
   city: string;
   @IsString()
   @IsNotEmpty()
+  @MaxLength(2)
   uf: string;
   @IsNotEmpty()
   @IsString()
