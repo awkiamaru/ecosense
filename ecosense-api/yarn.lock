@@ -554,13 +554,6 @@
     "@angular-devkit/schematics" "9.1.7"
     fs-extra "9.0.0"
 
-"@nestjs/serve-static@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/serve-static/-/serve-static-2.1.1.tgz#b18573bb14a52fc9ebc82fc887d1bc0846f1d18c"
-  integrity sha512-hkrCm7R8BWE8k9iiFlRtBIw+/VR4SMWos3yErRvC12y1ADI7gWkbu46+urx8jlcMnOEQW/xTAWY51xe6miBvHQ==
-  dependencies:
-    path-to-regexp "0.1.7"
-
 "@nestjs/testing@^7.0.0":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-7.1.2.tgz#0f253bbbcbe664285b511bc76a6e1c4563c32894"

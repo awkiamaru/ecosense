@@ -18,7 +18,7 @@ export class PointRepository extends Repository<Point> {
         'pointItem',
         'pointItem.pointId = point.pointId',
       )
-      .where('pointItem.itemId = :itemId', { itemId: parsedItems })
+      .where('pointItem.itemId IN (:itemId)', { itemId: parsedItems })
       .andWhere('city= :city', { city })
       .andWhere('uf = :uf', { uf })
       .distinct()

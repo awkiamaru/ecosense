@@ -55,11 +55,13 @@ export class PointsService {
 
   public async createNewPoint(pointDTO: CreatePointDTO) {
     const point = await this.pointRepository.savePoint(pointDTO);
+
     const pointItems = await Array<PointItem>();
     pointDTO.items.map((id: number) => {
       const pointItem = new PointItem();
       pointItem.pointId = point.pointId;
       pointItem.itemId = id;
+      pointItems.push(pointItem);
     });
     try {
       await this.pointItemRepository.insert(pointItems);
