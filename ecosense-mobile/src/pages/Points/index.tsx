@@ -1,15 +1,127 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
+import { Feather as Icon } from "@expo/vector-icons";
+import Constants from "expo-constants";
+import { useNavigation } from "@react-navigation/native";
+import MapView, { Marker } from "react-native-maps";
+import { SvgUri } from "react-native-svg";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Point = () => {
-  return <View />;
+  const navigation = useNavigation();
+  function handleNavigateBack() {
+    navigation.goBack();
+  }
+  function handleNavigateToDetail() {
+    navigation.navigate("Detail");
+  }
+  return (
+    <>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={handleNavigateBack}>
+          <Icon name="arrow-left" size={20} color="#34cb79"></Icon>
+        </TouchableOpacity>
+        <Text style={styles.title}>Wellcome</Text>
+        <Text style={styles.description}>Find in map collect points</Text>
+
+        <View style={styles.mapContainer}>
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: -23.4839388,
+              longitude: -46.6415811,
+              latitudeDelta: 0.014,
+              longitudeDelta: 0.014,
+            }}
+          >
+            <Marker
+              style={styles.mapMarker}
+              onPress={handleNavigateToDetail}
+              coordinate={{
+                latitude: -23.4839388,
+                longitude: -46.6415811,
+              }}
+            >
+              <View style={styles.mapMarkerContainer}>
+                <Image
+                  style={styles.mapMarkerImage}
+                  source={{
+                    uri: "https://i.picsum.photos/id/776/200/300.jpg",
+                  }}
+                ></Image>
+                <Text style={styles.mapMarkerTitle}>Mercado</Text>
+              </View>
+            </Marker>
+          </MapView>
+        </View>
+      </View>
+      <View style={styles.itemsContainer}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingHorizontal: 20,
+          }}
+        >
+          <TouchableOpacity style={styles.item} onPress={() => {}}>
+            <SvgUri
+              width={42}
+              height={42}
+              uri="https://raw.githubusercontent.com/LuisFrag/ecosense/5d004cd862ce7d8c55e0fd77da3c3b02f06234d7/docs/static/lampadas.svg"
+            ></SvgUri>
+            <Text style={styles.itemTitle}>Lâmpadas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.item} onPress={() => {}}>
+            <SvgUri
+              width={42}
+              height={42}
+              uri="https://raw.githubusercontent.com/LuisFrag/ecosense/5d004cd862ce7d8c55e0fd77da3c3b02f06234d7/docs/static/lampadas.svg"
+            ></SvgUri>
+            <Text style={styles.itemTitle}>Lâmpadas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.item} onPress={() => {}}>
+            <SvgUri
+              width={42}
+              height={42}
+              uri="https://raw.githubusercontent.com/LuisFrag/ecosense/5d004cd862ce7d8c55e0fd77da3c3b02f06234d7/docs/static/lampadas.svg"
+            ></SvgUri>
+            <Text style={styles.itemTitle}>Lâmpadas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.item} onPress={() => {}}>
+            <SvgUri
+              width={42}
+              height={42}
+              uri="https://raw.githubusercontent.com/LuisFrag/ecosense/5d004cd862ce7d8c55e0fd77da3c3b02f06234d7/docs/static/lampadas.svg"
+            ></SvgUri>
+            <Text style={styles.itemTitle}>Lâmpadas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.item} onPress={() => {}}>
+            <SvgUri
+              width={42}
+              height={42}
+              uri="https://raw.githubusercontent.com/LuisFrag/ecosense/5d004cd862ce7d8c55e0fd77da3c3b02f06234d7/docs/static/lampadas.svg"
+            ></SvgUri>
+            <Text style={styles.itemTitle}>Lâmpadas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.item} onPress={() => {}}>
+            <SvgUri
+              width={42}
+              height={42}
+              uri="https://raw.githubusercontent.com/LuisFrag/ecosense/5d004cd862ce7d8c55e0fd77da3c3b02f06234d7/docs/static/lampadas.svg"
+            ></SvgUri>
+            <Text style={styles.itemTitle}>Lâmpadas</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 32,
-    // paddingTop: 20 + Constants.statusBarHeight,
+    paddingTop: 20 + Constants.statusBarHeight,
   },
 
   title: {
