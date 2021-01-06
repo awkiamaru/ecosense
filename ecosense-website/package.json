@@ -12,7 +12,7 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.0",
     "@types/react-leaflet": "^2.5.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "expo-location": "^8.1.0",
     "leaflet": "^1.6.0",
     "react": "^16.13.1",
