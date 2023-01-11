@@ -27,7 +27,7 @@
     "@nestjs/typeorm": "^7.1.0",
     "@types/multer": "^1.4.3",
     "class-transformer": "^0.2.3",
-    "class-validator": "^0.12.2",
+    "class-validator": "^0.14.0",
     "multer": "^1.4.2",
     "mysql": "^2.18.1",
     "reflect-metadata": "^0.1.13",
